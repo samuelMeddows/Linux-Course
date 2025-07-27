@@ -23,10 +23,18 @@ Change to root user
 
 ---
 
-### Package Management
+### Installing Software - RHEL Based
 
-Package management is slighty different from each linus distro.
+Update software registry and upgrade any packages: `sudo dnf update && upgrade -y`
 
-<b>Debian Based</b>
+Istall additional package list: `sudo dnf install epel-release`
 
-<b>RHEL Based</b>
+Enable additional package lists: `sudo crb enable` `sudo dnf update`
+
+Install software: `sudo dnf install cowsay`
+
+Uninstall software: `sudo dnf remove cowsay`
+
+It is recommended to update after software install: `sudo dnf remove cowsay; dnf update`
+
+Note: Yum is still vailid but is beng replaced by dnf.

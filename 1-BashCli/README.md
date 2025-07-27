@@ -2,7 +2,7 @@
 
 ### Echo command
 
-Fix copy paste issue from host VM<br>
+Fix copy paste issue from host machine to linux VM<br>
 example: `^[[200~echo -e 'Hello \nWorld!'~`
 
 1. Create the file: `touch ~/.inputrc`
@@ -62,19 +62,3 @@ Show help: `ls --help` or `ls --h`
 Show manual: `man ls`
 
 ---
-
-### Installing Software
-
-Update software registry and upgrade any packages: `sudo dnf update && upgrade -y`
-
-Istall additional package list: `sudo dnf install epel-release`
-
-Enable additional package lists: `sudo crb enable` `sudo dnf update`
-
-Install software: `sudo dnf install cowsay`
-
-Uninstall software: `sudo dnf remove cowsay`
-
-It is recommended to update after software install: `sudo dnf remove cowsay; dnf update`
-
-Note: Yum is still vailid but is beng replaced by dnf.
