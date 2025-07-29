@@ -225,7 +225,6 @@ When a new device connectes to the network, it automatically gets assigned a new
 4. Acknowledge
    - Sever sends DHCP acknowledge message
    - Confirms IP address assignment and lease duration
-   -
 
 ---
 
@@ -304,7 +303,7 @@ raceroute to helsinki.fi (128.214.222.50), 50 hops max, 60 byte packets
 18  r1.helsinki.kampus.funet.fi (193.167.244.245)  294.995 ms  294.648 ms  291.115 ms
 19  kumpula1-r1.fe.helsinki.fi (128.214.173.242)  297.206 ms  298.093 ms  297.945 ms
 20  * * *
-{removed 21 *** to 49 ***}
+{removed 21 * * * to 49 * * *}
 50  * * *
 ```
 
@@ -322,9 +321,23 @@ With this technique wil can slowy trace the path to the destination.
 
 ---
 
-### Transport Layer (Layer 4-7 OSI)
+### Transport Layer (Layer 4 OSI)
 
 Often packets just get lost:
 
 - A router may be overloaded and just drop packets
--
+- UDP is a great solution for applications like VOIP and video streaming.
+- TCP ensures all packets are recived by requester if packets that don't arrive.
+
+**TCP: Transmission Contrrol Protocol**
+
+- A connection oriented protocol
+- Provides reliable, ordered and error-checked data transmission
+- Operates are the transport layer (layer 4)
+- It also ensure we utilze the bandwidth that the reciver can handel / our conntion can hendel.
+  - Flow Control: what the reciver can handel
+  - Congestion control: what the connection can handle
+
+---
+
+### TCP Ports
