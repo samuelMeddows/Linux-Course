@@ -86,6 +86,8 @@ A reliable communication between two devies on the same network
 
 ### Network Layer (packet) - Layer 3 IP (NOT)
 
+---
+
 - Here we send packets which can't be routed
 - We no longer work with MAC addresses but with IP addresses
 - Packets are wraped itnto a frames which can be sent to a router
@@ -95,6 +97,8 @@ A reliable communication between two devies on the same network
   ***
 
 ### How Subnets Enhance Network Efficiecy
+
+---
 
 A subnet is a network inside a network
 This allows us to manage more computers and make large networks more efficient.
@@ -147,8 +151,6 @@ Output:
     link/ether 08:00:27:f5:58:22 brd ff:ff:ff:ff:ff:ff
 
 ```
-
----
 
 ### Adress Resolution Protocol - ARP
 
