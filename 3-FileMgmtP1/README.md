@@ -1,15 +1,16 @@
 # File Managment Part 1
 
-### Create
+### Create - touch
 
 Create an empty file: `touch readme.txt`
 Create multiple files: `touch sarah.txt lisa.txt laura.txt`
 Create a folder: `mkdir invites`
 List files/folders with additional information: `ls -l`
+Create multiple files in another directory: `touch letters/file{1..3}.txt`
 
 ---
 
-### Move and Rename
+### Move and Rename - mv
 
 Move file to new location: `mv sarah.txt invites/`
 Rename a file: `mv sarah.txt sara.txt`
@@ -17,7 +18,7 @@ Rename a folder: `mv invites-bu/ invites-bak/`
 
 ---
 
-### Copy
+### Copy - cp
 
 Copy a file: `cp laura.txt eva.txt`
 Copy to a folder: `cp laura.txt invites/casey.txt`
@@ -25,7 +26,7 @@ Copy a folder: `cp -R invites/ invites-bu/`
 
 ---
 
-### Delete
+### Delete - rm
 
 Delete file(s): `rm Create Create`
 Delete folder: `rm -r invites-bak/`
