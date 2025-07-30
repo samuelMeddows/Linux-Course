@@ -9,7 +9,7 @@ The `ip` command:
 Show network config: `ip addr show` or `ip a`
 Can also use (older): `ifconfig -a`
 
-# Networking Monitoring - Wireshark
+### Networking Monitoring - Wireshark
 
 Install Wireshark: `sudo dmf install wireshark -y`
 Run Wireshark as Sudo: `sudo wireshark`
@@ -343,3 +343,383 @@ Often packets just get lost:
 ---
 
 ### TCP Ports
+
+**Ports in TCP**
+
+- 16 bit numbers assgined to specific processes and sevices
+- Rannge: 0-65535
+- Differentiate between multiple connections on a single device
+
+**Types of TCP Ports**
+
+- Well know ports: 0-1023
+- Reserved for standard services and protocols
+- Examples: HTTP(80), HTTPS(443), FTP(21), SSH(22)
+
+**Registed Ports**
+
+- Range: 1024-49151
+- Assigned to specific applications by IANA
+- Exampls: MySQL(3306), PostgresSQL(5432), VNC(5900)
+
+**Dynamic Ports**
+
+- Range: 49152-65535
+- No controlled by IANA
+- Avaible for any application to use
+
+Note: We can change the default port of most standard or prot specified application.
+
+**Port Comminication**
+Source Port
+
+- Randomly generated from dynamic/private port range
+- Identifies the sneding application on the client
+
+Destination Port
+
+- Identifies the reciving application on the server
+- Typically, this is a well-known or registered port number
+
+Port Combination
+
+- Unique combination of source IP, source port, destination IP and destination port
+- Differentiates multiple connections between the same devices
+
+---
+
+### Esstntial TCP & UDP Ports
+
+**Common TCP ports**
+
+- HTTP (80): Web
+- HTTPS (443): Secure Web
+- FTP (20, 21): File Transfer
+- SSH (22): Secure Shell
+- Telnet (23): Remote Shell (unencrypted)
+- SMTP (25): Simpple Mail
+- IMAP (143): Internet Message Access Protocol
+- POP3 (110): Post Office Protocol V3
+
+**Commonm UDP ports**
+
+- DNS (53): Domain Name System
+- DHCP (67, 68): Dynamic Host Config Protocol
+- SNMP (161, 162): Simple Network Management Protocol
+- TFTP (69): Trivial File Transfer Protocol
+- NTP (123): Network Time Protocol
+- RTP (5004, 5005): Real-Time Transport Protocol (audio/video streaming)
+
+---
+
+### The TCP Handshake Process (layer 4)
+
+**The Goal**
+
+- Both computers need to know that the other side responds
+- Both will later need to know how much data has already been recived by the other side
+
+**The 3 Way Handshake**
+
+- Thee source computer sends a SYN packet to the destination computer
+- The destination computer sends a SYN-ACK pack to the source computer
+- The source computer send a ACK packet - The connection is established now
+
+```
+Computer (Client)                         Server
+      |                                      |
+      | ------ SYN:1,ACK:0,ISN:1234 -------> |
+      |                                      |
+      | <----- SYN:1,ACK:1,ISN:100000 ------ |
+      |        ACK Number:1234               |
+      |                                      |
+      | ------ SYN:0,ACK:1,Sequence:12345 -> |
+      |        ACK Number: 10000             |
+      |                                      |
+```
+
+Connection Established ✔
+
+---
+
+### Port Scanning - nmap
+
+**Port Scanning**
+
+- Try to connect through all possible ports - Sending SYN packets
+- If a port is open, we will get a message back from the server
+
+**Nmap**
+
+- Network discovery and security auditing
+- Can single ports or an entire network
+- By default it will scan the most common 1000 ports
+
+**Namp Commands**
+Default scan: `nmap <hostname.IP>`
+Specify port(s): `nmap -p <port> <hostname.IP>` or `nmap -p <port> <port> <hostname.IP>`
+Scan all ports: `nmap -p <hostname.IP>`
+Scan a whole network: `nmap -p 192.168.1-100`
+
+**Net Cat**
+Net cat can also be used to check a port: `nc -zv 192.168.1.10 80`
+
+**Telnet**
+Telnet can also be used to check a port: `telnet 192.168.1.10 80`
+
+---
+
+### Network Address Translation - NAT
+
+Translate private IP network traffic to public IP traffice and in reverse.
+The local router will remeber the translation mapping when the public reply returns to the LAN.
+
+An ISP might also combine multiple customer networks to a single public IP.
+
+Port forwarding allows an outside source to reach a destination computer in the LAN.
+
+Example: Forward port 80 to 192.168.1.200 on port 8080
+
+### OSI Layer 5/7 - The Session Layer
+
+Interhost comminication.
+Note: Handeled by layer 7
+
+HTTP3 uses UDP to communicaite between servers.
+
+**Session Layer**
+
+- Establishes, maintains and terminates connections
+- Supports coms between applications
+
+**Exmaples**
+
+- Network File System (NFS)
+- Remote Proceedure Call (RPC)
+- Session Control Protocol (SCP)
+
+---
+
+### OSI Layer 6/7 - The Presentation Layer
+
+Data representation and Encryption.
+Note: Handeled by layer 7
+
+** Presentation Layer**
+
+- Deals with data representation
+- Ensure data compatability and security
+
+**Function**
+
+- Data Conversion
+- Transforms data formats: (ASCII, EBCDIC, Unicode)
+- Encryption and decryption: (SSL/TLS)
+- Data compression
+- Reduce data size (deflat, brotil compression)
+
+**Examples**
+
+- SSL/TLS: (Secure Socket Layer/Transport Layer Security)
+  - Provides secure comms over the network
+  - Technically it is operating at level 6 and 7
+- MIME: (Multipurpose Internet Mail Extensions)
+  - Defines how E-Mails support attachments, character encoinds and other feautres.
+
+---
+
+### OSI Layer 6/7 - The Application Layer
+
+Network process to application.
+The application layer are the protocols that the application can use
+
+**Example**
+
+- HTTP/HTTPS: Websies
+- IMAP: Accessing emails on a remote server
+- SSH/SCP: Accessing a remote shell/secure file copy
+- POP3: Downloading emails
+- Proprietary protocols: Custom VOIP implimentations
+
+---
+
+### Domain Name Systems - DNS Protocol
+
+Application layer.
+Translaye IP to domain names.
+
+**Process**
+
+1. Broswer local cache
+2. Browser will ask the OS which also has a local cache
+3. The OS will check the local host file
+4. The registed DNS resolver will be contacted
+5. The DNS resolver will have a cache
+6. The DNS resolver will contact one of the 13 root name servers at random
+   - They are labeled A to M: i.root-servers.net
+   - The rquest is to get TLD.com (Top Level Domain)
+   - The root name server does not know google.com, but it knows which server does know about .com domains.
+7. The root name server will give a name server that has the TLD.com
+   - e.gtld-servers.net at 192.12.94.30
+8. e.gtld-servers.net is contacted for the name servers for google.com
+   - It does not have it but gives the server: ns1.google.com / 216.239.32.10
+9. Connect to ns1.google.com who has the information and the DNS is resolved to the google.com IP.
+10. DNS resolver > OS > web browser
+
+Note:
+
+- Linux Domain servers are configured in /etc/resolv.conf.
+- Local (static) domain mapping is done in /etc/hosts.
+
+### DNS Records & the host command
+
+**Common DNS Records**
+A: Maps a domain to an IPv4 address
+AAAA: Maps a domain to an IPv6 address
+CNAME: Provides an alias for another domain name
+MX: Specifies mail servers for a domain
+NS: Lists authoritative name severs for a domain
+
+List all the recived DNS entires for a given domain: `host -a <domain>`
+
+Note: host -a tries to perform a zone transfer (AXFR), which most public DNS servers (like Google's 8.8.8.8) block for security reasons.
+
+### Manually Resolve DNS - dig
+
+This is a learning experience and not how DNS should be resolved in general.
+Quert a root name server: `dig @a.root-servers.net com NS`
+
+```
+; <<>> DiG 9.16.23-RH <<>> dig @a.root-servers.net com NS
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 54169
+;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;dig.				IN	A
+
+;; AUTHORITY SECTION:
+.			86400	IN	SOA	a.root-servers.net. nstld.verisign-grs.com. 2025072902 1800 900 604800 86400
+
+;; Query time: 115 msec
+;; SERVER: 198.41.0.4#53(198.41.0.4)
+;; WHEN: Wed Jul 30 13:44:41 AEST 2025
+;; MSG SIZE  rcvd: 107
+
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 18898
+;; flags: qr rd ra; QUERY: 1, ANSWER: 13, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;com.				IN	NS
+
+;; ANSWER SECTION:
+com.			162141	IN	NS	a.gtld-servers.net.
+com.			162141	IN	NS	b.gtld-servers.net.
+com.			162141	IN	NS	c.gtld-servers.net.
+com.			162141	IN	NS	d.gtld-servers.net.
+com.			162141	IN	NS	e.gtld-servers.net.
+com.			162141	IN	NS	f.gtld-servers.net.
+com.			162141	IN	NS	g.gtld-servers.net.
+com.			162141	IN	NS	h.gtld-servers.net.
+com.			162141	IN	NS	i.gtld-servers.net.
+com.			162141	IN	NS	j.gtld-servers.net.
+com.			162141	IN	NS	k.gtld-servers.net.
+com.			162141	IN	NS	l.gtld-servers.net.
+com.			162141	IN	NS	m.gtld-servers.net.
+
+;; Query time: 6 msec
+;; SERVER: 192.168.1.1#53(192.168.1.1)
+;; WHEN: Wed Jul 30 13:44:41 AEST 2025
+;; MSG SIZE  rcvd: 256
+```
+
+Quert a name server `dig @b.gtld-servers.net google.com NS`
+
+```
+; <<>> DiG 9.16.23-RH <<>> @b.gtld-servers.net google.com NS
+; (2 servers found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 61862
+;; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 4, ADDITIONAL: 9
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;google.com.			IN	NS
+
+;; AUTHORITY SECTION:
+google.com.		172800	IN	NS	ns2.google.com.
+google.com.		172800	IN	NS	ns1.google.com.
+google.com.		172800	IN	NS	ns3.google.com.
+google.com.		172800	IN	NS	ns4.google.com.
+
+;; ADDITIONAL SECTION:
+ns2.google.com.		172800	IN	AAAA	2001:4860:4802:34::a
+ns2.google.com.		172800	IN	A	216.239.34.10
+ns1.google.com.		172800	IN	AAAA	2001:4860:4802:32::a
+ns1.google.com.		172800	IN	A	216.239.32.10
+ns3.google.com.		172800	IN	AAAA	2001:4860:4802:36::a
+ns3.google.com.		172800	IN	A	216.239.36.10
+ns4.google.com.		172800	IN	AAAA	2001:4860:4802:38::a
+ns4.google.com.		172800	IN	A	216.239.38.10
+
+;; Query time: 211 msec
+;; SERVER: 192.33.14.30#53(192.33.14.30)
+;; WHEN: Wed Jul 30 13:48:29 AEST 2025
+;; MSG SIZE  rcvd: 287
+```
+
+Query the google name server: `dig @ns2.google.com google.com NS`
+
+```
+; <<>> DiG 9.16.23-RH <<>> @ns2.google.com google.com any
+; (2 servers found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 46789
+;; flags: qr aa rd; QUERY: 1, ANSWER: 22, AUTHORITY: 0, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;google.com.			IN	ANY
+
+;; ANSWER SECTION:
+google.com.		300	IN	A	172.217.167.78
+google.com.		300	IN	AAAA	2404:6800:4006:80a::200e
+google.com.		3600	IN	TXT	"v=spf1 include:_spf.google.com ~all"
+google.com.		3600	IN	TXT	"apple-domain-verification=30afIBcvSuDV2PLX"
+google.com.		86400	IN	CAA	0 issue "pki.goog"
+google.com.		300	IN	MX	10 smtp.google.com.
+google.com.		3600	IN	TXT	"cisco-ci-domain-verification=47c38bc8c4b74b7233e9053220c1bbe76bcc1cd33c7acf7acd36cd6a5332004b"
+google.com.		3600	IN	TXT	"onetrust-domain-verification=de01ed21f2fa4d8781cbc3ffb89cf4ef"
+google.com.		3600	IN	TXT	"MS=E4A68B9AB2BB9670BCE15412F62916164C0B20BB"
+google.com.		3600	IN	TXT	"docusign=05958488-4752-4ef2-95eb-aa7ba8a3bd0e"
+google.com.		345600	IN	NS	ns1.google.com.
+google.com.		3600	IN	TXT	"globalsign-smime-dv=CDYX+XFHUw2wml6/Gb8+59BsH31KzUr6c1l2BPvqKX8="
+google.com.		3600	IN	TXT	"docusign=1b0a6754-49b1-4db5-8540-d2c12664b289"
+google.com.		3600	IN	TXT	"google-site-verification=TV9-DBe4R80X4v0M4U_bd_J9cpOJM0nikft0jAgjmsQ"
+google.com.		60	IN	SOA	ns1.google.com. dns-admin.google.com. 788377477 900 900 1800 60
+google.com.		345600	IN	NS	ns4.google.com.
+google.com.		345600	IN	NS	ns2.google.com.
+google.com.		3600	IN	TXT	"facebook-domain-verification=22rm551cu4k0ab0bxsw536tlds4h95"
+google.com.		3600	IN	TXT	"google-site-verification=4ibFUgB-wXLQ_S7vsXVomSTVamuOXBiVAzpR5IZ87D0"
+google.com.		21600	IN	HTTPS	1 . alpn="h2,h3"
+google.com.		3600	IN	TXT	"google-site-verification=wD8N7i1JTNTkezJ49swvWW48f8_9xveREV4oB-0Hf5o"
+google.com.		345600	IN	NS	ns3.google.com.
+
+;; Query time: 21 msec
+;; SERVER: 216.239.34.10#53(216.239.34.10)
+;; WHEN: Wed Jul 30 13:51:33 AEST 2025
+;; MSG SIZE  rcvd: 1121
+```
