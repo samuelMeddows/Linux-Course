@@ -11,7 +11,25 @@
   - Unretricted access to the entire system
   - Can add/remove users, install software and change the system configuration
 
----
+**Extras**
+Show everything in uname: `uname -a`
+Show the kernel release: `uname -r`
+
+How do you check how much disk space is left (human redable): `df -ah`
+
+How to check a service: `systemctl status <serviceName>`
+
+Checking networking socket/ports: `netstat -tcplpn`
+
+Check CPU usage for a process: `ps aux | grep netmanager` or `top` or `htop`
+
+How would you mount a new HDD/USB Drive:
+`ls /mnt`
+`mount /dev/sda2 mnt/`
+
+Check existing mounts: `mount`
+
+Mount on boot: `nano /etc/fstab`
 
 ### Elevating Privlages: sudo
 
